@@ -20,10 +20,10 @@ Or:
 
 Given this CSV input:
 
-    1432168589,amazon-ebs,artifact-count,1
+    1432168589,amazon-ebs,artifact-count,2
     1432168589,amazon-ebs,artifact,0,builder-id,mitchellh.amazonebs
-    1432168589,amazon-ebs,artifact,0,id,us-west-1:ami-df76909b
-    1432168589,amazon-ebs,artifact,0,string,AMIs were created:\n\nus-west-1: ami-df76909b
+    1432168589,amazon-ebs,artifact,0,id,us-west-1:ami-df79909b
+    1432168589,amazon-ebs,artifact,0,string,AMIs were created:\n\nus-west-1: ami-df79909b
     1432168589,amazon-ebs,artifact,0,files-count,0
     1432168589,amazon-ebs,artifact,0,end
     1432168589,amazon-ebs,artifact,1,builder-id,mitchellh.amazonebs
@@ -45,7 +45,7 @@ csv2template will produce this output:
 
     variable "images" {
         default = {
-    
+
             us-west-1 = "ami-df79909b"
             us-west-2 = "ami-df79909c"
         }
