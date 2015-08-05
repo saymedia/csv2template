@@ -47,6 +47,12 @@ var TerraformTemplate = `variable "images" {
     }
 }`
 
+// A simple packer template for aws amis in zones
+var PackerTemplate = `{
+{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
+    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+}`
+
 // ReadCSV converts the csv files into a data structure we can use
 func ReadCSV(csvReader io.Reader) (ret [][]string, err error) {
 	reader := csv.NewReader(csvReader)
