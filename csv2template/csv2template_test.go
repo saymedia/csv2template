@@ -5,6 +5,20 @@ import (
 	"testing"
 )
 
+// A simple terraform template for aws amis in multiple zones
+var terraformTemplate = `variable "images" {
+    default = {
+{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
+        {{index $artifactb 0}} = "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+    }
+}`
+
+// A simple packer template for aws amis in multiple zones
+var packerTemplate = `{
+{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
+    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+}`
+
 func csvToPage(data string) (page TemplatePage) {
 	splitData := strings.Split(data, "\n")
 	for _, v := range splitData {
@@ -73,7 +87,7 @@ func TestToTerraformTemplate(t *testing.T) {
     }
 }`
 
-	doc, err := ToTemplate(page, TerraformTemplate)
+	doc, err := ToTemplate(page, terraformTemplate)
 	if err != nil {
 		t.Log("Terraform Template transform produced an error")
 		t.Logf("Error: %#v", err)
@@ -105,7 +119,7 @@ func TestToPackerTemplate(t *testing.T) {
     "us-west-2": "ami-df79909c"
 }`
 
-	doc, err := ToTemplate(page, PackerTemplate)
+	doc, err := ToTemplate(page, packerTemplate)
 	if err != nil {
 		t.Log("Packer Template transform produced an error")
 		t.Logf("Error: %#v", err)

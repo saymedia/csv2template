@@ -35,23 +35,9 @@ func (t *TemplatePage) AddRows(rows []Row) {
 	}
 }
 
-// A very basic output for tests
+// A very basic default output
 var DefaultTemplate = `{{range .Rows}}
 {{index .Columns 0}}, {{index .Columns 1}}{{end}}`
-
-// A simple terraform template for aws amis in zones
-var TerraformTemplate = `variable "images" {
-    default = {
-{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
-        {{index $artifactb 0}} = "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
-    }
-}`
-
-// A simple packer template for aws amis in zones
-var PackerTemplate = `{
-{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
-    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
-}`
 
 // ReadCSV converts the csv files into a data structure we can use
 func ReadCSV(csvReader io.Reader) (ret [][]string, err error) {

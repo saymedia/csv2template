@@ -1,6 +1,6 @@
 # csv2template
 
-csv2template transforms CSV files into [Go Templated](http://golang.org/pkg/text/template/) text output. For example, you have transform Packer build output that produces Terraform config files.
+csv2template transforms CSV files into [Go Templated](http://golang.org/pkg/text/template/) text output. For example, you have transform Packer machine-readable output into Terraform config files. There are some sample templates in the `templates` folder. The CSV file is fully read into memory before passing the list of lines to the template.
 
 [![travis build status for csv2template](https://travis-ci.org/saymedia/csv2template.svg)](https://travis-ci.org/saymedia/csv2template) [![Coverage Status](https://coveralls.io/repos/saymedia/csv2template/badge.svg?branch=master)](https://coveralls.io/r/saymedia/csv2template?branch=master)
 
