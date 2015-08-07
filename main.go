@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"github.com/saymedia/csv2template/csv2template"
 	"io"
 	"io/ioutil"
@@ -86,7 +87,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Template render failed: %s", err)
 	}
-	log.Println(doc)
+	fmt.Println(doc)
 
 	// Done
 	os.Exit(0)
