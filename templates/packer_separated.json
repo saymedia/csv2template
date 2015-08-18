@@ -1,0 +1,5 @@
+{
+{{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
+"SOURCE_REGION_{{index $row.Columns 3}}"="{{index $artifactb 0}}"
+"SOURCE_AMI_{{index $row.Columns 3}}"="{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+}
