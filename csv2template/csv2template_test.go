@@ -16,7 +16,7 @@ var terraformTemplate = `variable "images" {
 // A simple packer template for aws amis in multiple zones
 var packerTemplate = `{
 {{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
-    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{if lt $index ((len $row.Columns) -1)}},{{end}}{{end}}{{end}}{{end}}
 }`
 
 func csvToPage(data string) (page TemplatePage) {
@@ -115,7 +115,7 @@ func TestToPackerTemplate(t *testing.T) {
 1432168589,amazon-ebs,artifact,1,end`)
 	out := `{
 
-    "us-west-1": "ami-df79909b"
+    "us-west-1": "ami-df79909b",
     "us-west-2": "ami-df79909c"
 }`
 

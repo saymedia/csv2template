@@ -1,4 +1,4 @@
 {
 {{range $index, $row := .Rows}}{{if eq (index $row.Columns 2) "artifact"}}{{if eq (index $row.Columns 4) "id"}}{{ $artifact := (index $row.Columns 5) }}{{ $artifactb := ($artifact | Split ":")}}
-    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{end}}{{end}}{{end}}
+    "{{index $artifactb 0}}": "{{index $artifactb 1}}"{{if lt $index ((len $row.Columns) -1)}},{{end}}{{end}}{{end}}{{end}}
 }
